@@ -1,5 +1,5 @@
 let current_image = 1;
-let max_images = 2;
+let max_images = 4;
 
 let dogma_count = 0;
 let science_count = 0;
