@@ -1,0 +1,132 @@
+*,
+html,
+body {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100dvw;
+    height: 100dvh;
+}
+
+main {
+    position: relative;
+    color: white;
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: black;
+}
+
+h1 > strong {
+    color: #d51233;
+}
+
+h1 > i {
+    color: #009292;
+}
+
+div.infos_text {
+    font-size: 5rem;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 50%;
+}
+
+.infos_text#infos_text1 {
+    background-color: #22080f;
+}
+
+.infos_text#infos_text2 {
+    background-color: #002924;
+}
+
+h2 {
+    font-size: 4rem;
+}
+
+section {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 1rem;
+
+    width: 35%;
+    height: 100%;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.actions_buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 500px;
+    height: 4rem;
+
+    gap: 2rem;
+
+    margin-top: 1.5rem;
+}
+
+.actions_buttons > button {
+    color: white;
+    font-size: 2rem;
+
+    width: 15rem;
+    padding: 0.5rem;
+
+    outline: 0px;
+    border: 0px;
+
+    border-radius: 0.5rem;
+
+    cursor: pointer;
+
+    transition: 0.1s;
+}
+
+button#dogma_button {
+    background-color: #bc3041;
+}
+
+button#dogma_button:hover {
+    background-color: #a42d55;
+}
+
+button#science_button {
+    background-color: #009292;
+}
+
+button#science_button:hover {
+    background-color: #086c7d;
+}
+
+img {
+    width: 700px;
+    height: 500px;
+
+    border-radius: 0.5rem;
+    border: 1px solid black;
+}
