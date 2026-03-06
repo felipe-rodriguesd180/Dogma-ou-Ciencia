@@ -1,27 +1,29 @@
+/* style.css - Versão melhorada */
 *,
 html,
 body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
     width: 100dvw;
     height: 100dvh;
+    overflow: hidden; /* Evita scroll desnecessário */
 }
 
 main {
     position: relative;
     color: white;
     display: flex;
-
     width: 100%;
     height: 100%;
-
-    background-color: black;
+    background-color: #000;
+    overflow: hidden;
 }
 
+/* Confetes */
 #confetti-container {
     position: fixed;
     top: 0;
@@ -34,9 +36,9 @@ main {
 
 .confetto {
     position: absolute;
-    top: -10px;
+    top: -20px;
     border-radius: 50%;
-    animation: fall 4s linear infinite;
+    will-change: transform; /* Otimização de performance */
 }
 
 @keyframes fall {
@@ -48,6 +50,12 @@ main {
     }
 }
 
+/* Tipografia */
+h1 {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+}
+
 h1 > strong {
     color: #d51233;
 }
@@ -56,16 +64,29 @@ h1 > i {
     color: #009292;
 }
 
-div.infos_text {
-    font-size: 5rem;
+h2 {
+    font-size: clamp(2rem, 4vw, 4rem);
+}
 
+h2#current_image {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    font-weight: normal;
+    z-index: 10;
+}
+
+/* Painéis laterais */
+.infos_text {
+    flex: 1;
     display: flex;
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
-
-    width: 50%;
+    font-size: clamp(2rem, 5vw, 5rem);
+    transition: background-color 0.3s;
 }
 
 .infos_text#infos_text1 {
@@ -76,41 +97,132 @@ div.infos_text {
     background-color: #002924;
 }
 
-h2 {
-    font-size: 4rem;
-}
-
-section {
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
+/* Seção central */
+section:not(#certificado) {
+    flex: 0 0 auto;
+    width: min(90%, 800px);
     display: flex;
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
-
     gap: 1rem;
-
-    width: 35%;
-    height: 100%;
+    padding: 1rem;
 }
 
+/* Imagem */
+#image {
+    width: 100%;
+    height: 55dvh;
+    border-radius: 0.5rem;
+    border: 2px solid #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Botões */
+.actions_buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.actions_buttons > button {
+    position: relative;
+    color: white;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    padding: 0.8rem 1.5rem;
+    min-width: 200px;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition:
+        transform 0.1s,
+        filter 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.actions_buttons > button:hover:not(:disabled) {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.actions_buttons > button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.actions_buttons > button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button#dogma_button {
+    background-color: #bc3041;
+}
+
+button#science_button {
+    background-color: #009292;
+}
+
+/* Feedback visual nos botões */
+button .dogma_up,
+button .science_up {
+    position: absolute;
+    font-size: 1rem;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 20;
+}
+
+button#dogma_button .dogma_up {
+    right: 20%;
+    animation: slideLeft 1s forwards;
+}
+
+button#science_button .science_up {
+    left: 20%;
+    animation: slideRight 1s forwards;
+}
+
+@keyframes slideLeft {
+    0% {
+        right: 20%;
+        opacity: 1;
+    }
+    100% {
+        right: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        left: 20%;
+        opacity: 1;
+    }
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+/* Certificado */
 section#certificado {
     display: none;
-    position: absolute;
-
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-
-    background-color: rgba(0, 0, 0, 0.908);
-}
-
-section#certificado > img {
-    display: none;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 100;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
 }
 
 section#certificado.open-dogma,
@@ -118,174 +230,153 @@ section#certificado.open-science {
     display: flex;
 }
 
-section#certificado.open-dogma > img.certificado-dogma {
-    display: flex !important;
+section#certificado img {
+    display: none;
+    max-width: 90%;
+    max-height: 60vh;
+    object-fit: contain;
 }
 
-section#certificado.open-science > img.certificado-science {
-    display: flex !important;
+section#certificado.open-dogma img.certificado-dogma,
+section#certificado.open-science img.certificado-science {
+    display: block;
 }
 
-h1 {
-    font-size: 3rem;
-}
-
-.actions_buttons {
+.total_coisas {
     display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 500px;
-    height: 4rem;
-
-    gap: 2rem;
-
-    margin-top: 1.5rem;
+    gap: 3rem;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem;
+    border-radius: 2rem;
 }
 
-.actions_buttons > button {
-    color: white;
-    font-size: 2rem;
+/* Adicione ao seu style.css */
 
-    width: 15rem;
-    padding: 0.5rem;
-
-    outline: 0px;
-    border: 0px;
-
-    border-radius: 0.5rem;
-
-    cursor: pointer;
-
-    transition: 0.1s;
+/* Loading state para imagem */
+#image.loading {
+    opacity: 0.5;
+    filter: blur(2px);
+    transition:
+        opacity 0.2s,
+        filter 0.2s;
 }
 
-button#dogma_button {
-    background-color: #bc3041;
+#image.loaded {
+    opacity: 1;
+    filter: blur(0);
 }
 
-button#dogma_button:hover {
-    background-color: #a42d55;
+/* Animação para o loader */
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
-button#science_button {
-    background-color: #009292;
+#image-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 100;
 }
 
-button#science_button:hover {
-    background-color: #086c7d;
+/* Feedback de clique ignorado */
+button:active {
+    transform: scale(0.95);
 }
 
-img {
-    width: 700px;
-    height: 500px;
-
-    border-radius: 0.5rem;
-    border: 1px solid black;
+button.click-ignored {
+    animation: shake 0.3s ease-in-out;
 }
 
-@media (max-width: 600px) {
-    h1 {
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* Desabilitar botões visualmente */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    .infos_text {
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 0.5rem;
         font-size: 2rem;
-        display: flex;
+    }
 
-        align-content: center;
-        justify-content: center;
-
+    section:not(#certificado) {
+        flex: 1;
         width: 100%;
-
-        gap: 0.5rem;
     }
 
-    div.infos_text {
-        font-size: 1rem;
-
-        display: flex;
-        flex-direction: column;
-
-        align-items: center;
-        justify-content: end;
-
-        width: 50%;
-        height: 100%;
-    }
-
-    .infos_text#infos_text1 {
-        background-color: #22080f;
-    }
-
-    .infos_text#infos_text2 {
-        background-color: #002924;
-    }
-
-    h2 {
-        font-size: 1rem;
-    }
-
-    section {
+    h2#current_image {
         position: absolute;
+        
+        top: auto;
+        bottom: 28%;
 
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        left: 84%;
 
-        display: flex;
-        flex-direction: column;
-
-        align-items: center;
-        justify-content: center;
-
-        gap: 1rem;
-
-        width: 35%;
-        height: 100%;
-    }
-
-    section#certificado {
-        display: none;
-        position: absolute;
-
-        width: 100%;
-        height: 100%;
-
-        background-color: rgba(0, 0, 0, 0.908);
+        background: rgba(0, 0, 0, 0.636);
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
     }
 
     .actions_buttons {
-        display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
-
-        width: 200px;
-        height: 4rem;
-
-        gap: 2rem;
-
-        margin-top: 1.5rem;
     }
 
     .actions_buttons > button {
-        color: white;
-        font-size: 2rem;
+        width: 100%;
+        max-width: 300px;
+    }
+}
 
-        width: 400px;
-        padding: 0.5rem;
-
-        outline: 0px;
-        border: 0px;
-
-        border-radius: 0.5rem;
-
-        cursor: pointer;
-
-        transition: 0.1s;
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    .confetto,
+    button .dogma_up,
+    button .science_up {
+        animation: none !important;
     }
 
-    img {
-        width: 370px;
-        height: 300px;
-
-        border-radius: 0.5rem;
-        border: 1px solid black;
+    button:hover:not(:disabled) {
+        transform: none;
     }
+}
+
+/* Foco visível para teclado */
+button:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
 }
